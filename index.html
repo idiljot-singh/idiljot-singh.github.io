@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diljot Singh Johal — Cybersecurity Portfolio</title>
+<meta name="description" content="Cybersecurity portfolio of Diljot Singh Johal — penetration testing, digital forensics, OSINT, and threat intelligence.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05070a;
+    --bg-panel: #0a0f14;
+    --bg-panel-2: #0d141b;
+    --border: #16222b;
+    --green: #39ff9d;
+    --green-dim: #1f8f5c;
+    --cyan: #4fd8ff;
+    --magenta: #ff4fd8;
+    --text: #c9d6dc;
+    --text-dim: #6b7d87;
+    --text-bright: #eafff5;
+    --danger: #ff5c5c;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', 'Share Tech Mono', monospace;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* scanline / grid backdrop */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image:
+      linear-gradient(rgba(57,255,157,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(57,255,157,0.035) 1px, transparent 1px);
+    background-size: 42px 42px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  }
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    background: repeating-linear-gradient(
+      0deg, rgba(0,0,0,0.15), rgba(0,0,0,0.15) 1px, transparent 1px, transparent 3px
+    );
+    opacity: 0.35;
+  }
+
+  a { color: var(--cyan); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .wrap { position: relative; z-index: 3; max-width: 980px; margin: 0 auto; padding: 0 24px; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(5,7,10,0.85);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; max-width: 980px; }
+  .brand { color: var(--green); font-weight: 800; letter-spacing: 1px; font-size: 15px; }
+  .brand .cursor { display: inline-block; width: 9px; height: 16px; background: var(--green); margin-left: 4px; animation: blink 1s steps(1) infinite; vertical-align: -3px; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .navlinks { display: flex; gap: 22px; font-size: 13px; }
+  .navlinks a { color: var(--text-dim); }
+  .navlinks a:hover { color: var(--green); text-decoration: none; }
+
+  /* HERO */
+  header.hero { padding: 90px 0 60px; }
+  .prompt-line { color: var(--text-dim); font-size: 13px; margin-bottom: 10px; }
+  .prompt-line .sym { color: var(--green); }
+  h1.title {
+    font-size: clamp(28px, 5vw, 46px);
+    margin: 0 0 6px;
+    color: var(--text-bright);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+  h1.title .accent { color: var(--green); text-shadow: 0 0 18px rgba(57,255,157,0.55); }
+  .subtitle {
+    font-size: clamp(14px, 2.2vw, 18px);
+    color: var(--cyan);
+    margin: 0 0 22px;
+  }
+  #typed-line::after {
+    content: "▌";
+    color: var(--green);
+    animation: blink 1s steps(1) infinite;
+    margin-left: 2px;
+  }
+  .hero-desc { max-width: 640px; color: var(--text); font-size: 14.5px; margin-bottom: 28px; }
+  .hero-desc .hl { color: var(--green); }
+
+  .badges { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; }
+  .badge {
+    border: 1px solid var(--border);
+    background: var(--bg-panel);
+    color: var(--text-dim);
+    font-size: 11.5px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.3px;
+  }
+  .badge.on { color: var(--green); border-color: var(--green-dim); }
+
+  .cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 18px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid var(--green-dim);
+    color: var(--green);
+    background: rgba(57,255,157,0.06);
+    transition: all .15s ease;
+  }
+  .btn:hover { background: rgba(57,255,157,0.15); text-decoration: none; box-shadow: 0 0 20px rgba(57,255,157,0.25); }
+  .btn.ghost { border-color: var(--border); color: var(--text); background: transparent; }
+  .btn.ghost:hover { border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 16px rgba(79,216,255,0.2); }
+
+  /* SECTION HEADERS */
+  section { padding: 54px 0; border-top: 1px solid var(--border); }
+  .sec-tag { color: var(--green); font-size: 12px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 6px; }
+  .sec-title { font-size: 24px; color: var(--text-bright); margin: 0 0 26px; font-weight: 800; }
+  .sec-title .n { color: var(--text-dim); font-weight: 400; }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; }
+  @media (max-width: 760px) { .about-grid { grid-template-columns: 1fr; } }
+  .terminal {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .terminal .bar { display: flex; gap: 6px; padding: 10px 12px; border-bottom: 1px solid var(--border); background: var(--bg-panel-2); }
+  .terminal .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot.r { background: #ff5f56; } .dot.y { background: #ffbd2e; } .dot.g { background: #27c93f; }
+  .terminal .body { padding: 16px 18px; font-size: 13px; }
+  .terminal .body .k { color: var(--cyan); }
+  .terminal .body .v { color: var(--text); }
+  .terminal .body .muted { color: var(--text-dim); }
+  .terminal .body div { margin-bottom: 5px; }
+
+  .thesis-box {
+    border: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(79,216,255,0.04), transparent);
+    border-radius: 8px;
+    padding: 18px 20px;
+  }
+  .thesis-box .label { color: var(--cyan); font-size: 11.5px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+  .thesis-box h3 { margin: 0 0 10px; font-size: 15.5px; color: var(--text-bright); line-height: 1.4; }
+  .thesis-box p { font-size: 13px; color: var(--text-dim); margin: 0 0 10px; }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag { font-size: 10.5px; border: 1px solid var(--border); color: var(--text-dim); padding: 3px 7px; border-radius: 3px; }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
+  .skill-card {
+    border: 1px solid var(--border);
+    background: var(--bg-panel);
+    border-radius: 8px;
+    padding: 16px 18px;
+    transition: border-color .15s ease, transform .15s ease;
+  }
+  .skill-card:hover { border-color: var(--green-dim); transform: translateY(-2px); }
+  .skill-card .h { color: var(--green); font-size: 13px; font-weight: 700; margin-bottom: 8px; letter-spacing: 0.3px; }
+  .skill-card .items { font-size: 12px; color: var(--text-dim); line-height: 1.7; }
+
+  /* PROJECTS */
+  .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+  .proj-card {
+    border: 1px solid var(--border);
+    background: var(--bg-panel);
+    border-radius: 8px;
+    padding: 18px 20px;
+    display: flex; flex-direction: column;
+    transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+    position: relative;
+  }
+  .proj-card:hover { border-color: var(--cyan); transform: translateY(-3px); box-shadow: 0 8px 30px rgba(79,216,255,0.08); }
+  .proj-card .idx { color: var(--text-dim); font-size: 11px; margin-bottom: 8px; }
+  .proj-card h3 { margin: 0 0 8px; font-size: 15px; color: var(--text-bright); line-height: 1.35; }
+  .proj-card p { font-size: 12.5px; color: var(--text-dim); margin: 0 0 14px; flex-grow: 1; }
+  .proj-card .link-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+  .proj-card .link-row a { color: var(--green); font-weight: 700; }
+  .proj-card .link-row a::after { content: " →"; }
+  .proj-card .stack { font-size: 10.5px; color: var(--magenta); }
+
+  /* CONTACT / FOOTER */
+  .contact-box {
+    border: 1px solid var(--border);
+    background: var(--bg-panel);
+    border-radius: 8px;
+    padding: 28px 26px;
+    text-align: center;
+  }
+  .contact-box p { color: var(--text-dim); font-size: 13px; margin: 0 0 18px; }
+  .contact-links { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+  footer { padding: 30px 0 50px; text-align: center; color: var(--text-dim); font-size: 11.5px; }
+  footer .sig { color: var(--green-dim); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">djsingh<span class="cursor"></span></div>
+    <div class="navlinks">
+      <a href="#about">about</a>
+      <a href="#skills">skills</a>
+      <a href="#projects">projects</a>
+      <a href="#contact">contact</a>
+      <a href="https://github.com/idiljot-singh" target="_blank" rel="noopener">github↗</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="prompt-line"><span class="sym">guest@portfolio</span>:~$ whoami</div>
+    <h1 class="title">Diljot Singh <span class="accent">Johal</span></h1>
+    <div class="subtitle" id="typed-line"></div>
+    <p class="hero-desc">
+      Final-year <span class="hl">BEng ICT Bioeconomy</span> student at Häme University of Applied Sciences (HAMK), Finland.
+      Hands-on across offensive security, digital forensics, and OSINT — currently building a
+      <span class="hl">Cyber Threat Intelligence</span> process for a Finnish engineering consultancy as my Bachelor's thesis.
+    </p>
+    <div class="badges">
+      <span class="badge on">● available for opportunities</span>
+      <span class="badge">Tampere, Finland</span>
+      <span class="badge">remote-friendly</span>
+      <span class="badge">EN · FI · PA/HI</span>
+    </div>
+    <div class="cta-row">
+      <a class="btn" href="#projects">./view_projects.sh</a>
+      <a class="btn ghost" href="https://github.com/idiljot-singh/security-portfolio" target="_blank" rel="noopener">full portfolio index</a>
+      <a class="btn ghost" href="mailto:Johaldiljotsingh@gmail.com">contact</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-tag">01 // profile</div>
+    <h2 class="sec-title">about <span class="n">--verbose</span></h2>
+    <div class="about-grid">
+      <div class="terminal">
+        <div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+        <div class="body">
+          <div><span class="k">$</span> <span class="v">cat profile.json</span></div>
+          <div class="muted">{</div>
+          <div>&nbsp;&nbsp;<span class="k">"name"</span>: <span class="v">"Diljot Singh Johal"</span>,</div>
+          <div>&nbsp;&nbsp;<span class="k">"education"</span>: <span class="v">"BEng ICT Bioeconomy, HAMK (2023–2026/27)"</span>,</div>
+          <div>&nbsp;&nbsp;<span class="k">"focus"</span>: <span class="v">["pentesting", "digital forensics", "OSINT", "CTI"]</span>,</div>
+          <div>&nbsp;&nbsp;<span class="k">"location"</span>: <span class="v">"Tampere, Finland"</span>,</div>
+          <div>&nbsp;&nbsp;<span class="k">"status"</span>: <span class="v">"available immediately"</span></div>
+          <div class="muted">}</div>
+        </div>
+      </div>
+      <div class="thesis-box">
+        <div class="label">Bachelor's Thesis — In Progress</div>
+        <h3>Development of a Cyber Threat Intelligence (CTI) Process</h3>
+        <p>Case study for a ~1,400-employee Finnish engineering &amp; consulting organisation. Building a 5-phase CTI lifecycle (Planning → Collection → Analysis → Dissemination → Feedback).</p>
+        <div class="tag-row">
+          <span class="tag">STIX 2.1 / TAXII</span>
+          <span class="tag">MITRE ATT&amp;CK</span>
+          <span class="tag">MITRE D3FEND</span>
+          <span class="tag">Diamond Model</span>
+          <span class="tag">NIST CSF 2.0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-tag">02 // toolkit</div>
+    <h2 class="sec-title">skills <span class="n">--all</span></h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="h">▹ Offensive Security</div>
+        <div class="items">Nmap · Metasploit (msfvenom, Meterpreter)<br>Nikto · WPScan · bettercap · arpspoof<br>Veil-Evasion</div>
+      </div>
+      <div class="skill-card">
+        <div class="h">▹ Digital Forensics</div>
+        <div class="items">Wireshark · Volatility Framework<br>Log correlation (Nessus/Nmap/Nikto)<br>EXIF / metadata analysis</div>
+      </div>
+      <div class="skill-card">
+        <div class="h">▹ OSINT &amp; Threat Intel</div>
+        <div class="items">Shodan · Censys · DNS/WHOIS recon<br>MITRE ATT&amp;CK / D3FEND<br>STIX/TAXII · Diamond Model</div>
+      </div>
+      <div class="skill-card">
+        <div class="h">▹ Programming &amp; Data</div>
+        <div class="items">Python (Pandas, NumPy, Matplotlib)<br>SQL · JavaScript/Node.js · Solidity</div>
+      </div>
+      <div class="skill-card">
+        <div class="h">▹ Platforms</div>
+        <div class="items">Kali Linux · Docker · Git<br>MySQL / MongoDB</div>
+      </div>
+      <div class="skill-card">
+        <div class="h">▹ Languages</div>
+        <div class="items">English — fluent<br>Finnish — conversational<br>Punjabi/Hindi — native</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-tag">03 // repository</div>
+    <h2 class="sec-title">projects <span class="n">-la /home/djsingh</span></h2>
+    <div class="proj-grid" id="proj-grid"></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-tag">04 // uplink</div>
+    <h2 class="sec-title">contact <span class="n">--secure</span></h2>
+    <div class="contact-box">
+      <p>Open to junior cybersecurity, IT, and data roles in Finland or remote. Reach out any way below.</p>
+      <div class="contact-links">
+        <a class="btn" href="mailto:Johaldiljotsingh@gmail.com">email</a>
+        <a class="btn ghost" href="https://linkedin.com/in/diljotsinghjohal" target="_blank" rel="noopener">linkedin</a>
+        <a class="btn ghost" href="https://github.com/idiljot-singh" target="_blank" rel="noopener">github</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 Diljot Singh Johal — built with <span class="sig">HTML/CSS</span>, hosted on GitHub Pages</div>
+  </div>
+</footer>
+
+<script>
+  // Typing effect for the subtitle line
+  const line = "Cybersecurity | Penetration Testing | Digital Forensics | OSINT | Threat Intelligence";
+  const el = document.getElementById('typed-line');
+  let i = 0;
+  function type() {
+    if (i <= line.length) {
+      el.textContent = line.slice(0, i);
+      i++;
+      setTimeout(type, 28);
+    }
+  }
+  type();
+
+  // Project data -> individual repos
+  const projects = [
+    {
+      n: "01", title: "Metasploitable2 Penetration Test",
+      desc: "Full black-box pentest: 12 validated vulnerabilities from an exposed root bind shell to a vsftpd backdoor, with a full remediation report.",
+      stack: "Nmap · Metasploit",
+      url: "https://github.com/idiljot-singh/metasploitable2-penetration-test"
+    },
+    {
+      n: "02", title: "Ethical Hacking Lab Course",
+      desc: "ARP MITM, Metasploit exploitation, Meterpreter post-exploitation, AV evasion, and an honestly-documented persistence attempt Defender caught.",
+      stack: "Metasploit · bettercap · Veil",
+      url: "https://github.com/idiljot-singh/ethical-hacking-lab"
+    },
+    {
+      n: "03", title: "CyberSec4Europe Forensics",
+      desc: "Reconstructed a phishing + SQL-injection breach end to end from raw Apache logs and cross-referenced vulnerability scans.",
+      stack: "Nessus · Nmap · Nikto",
+      url: "https://github.com/idiljot-singh/cybersec4europe-forensics"
+    },
+    {
+      n: "04", title: "Nixu Challenge (CTF)",
+      desc: "Multi-layer PCAP flag decoding plus Windows memory forensics — recovered plaintext LSA secrets and a deleted design file.",
+      stack: "Wireshark · Volatility",
+      url: "https://github.com/idiljot-singh/nixu-challenge-ctf"
+    },
+    {
+      n: "05", title: "Da Vivian Code (CTF)",
+      desc: "Full recon-to-flag attack chain: enumeration, metadata pivoting, multi-layer decoding, and SSH credential brute-forcing.",
+      stack: "Nmap · WPScan · Metasploit",
+      url: "https://github.com/idiljot-singh/da-vivian-code-ctf"
+    },
+    {
+      n: "06", title: "Self-OSINT / Breach Audit",
+      desc: "Combined search-engine dorking with breach-database checks — surfaced 9 exposures that search alone never showed.",
+      stack: "OSINT · HaveIBeenPwned",
+      url: "https://github.com/idiljot-singh/osint-self-audit"
+    },
+    {
+      n: "07", title: "OSINT Infrastructure Recon",
+      desc: "Passive DNS and certificate-transparency reconnaissance identifying a real email-security (DMARC) misconfiguration.",
+      stack: "Censys · Shodan · DNS",
+      url: "https://github.com/idiljot-singh/osint-infrastructure-recon"
+    },
+    {
+      n: "08", title: "Social-Engineering Attack Simulation",
+      desc: "End-to-end OSINT → profiling → attack-plan hypothesis → defense framework. Real names anonymized.",
+      stack: "OSINT · Threat Modeling",
+      url: "https://github.com/idiljot-singh/social-engineering-attack-simulation"
+    },
+    {
+      n: "09", title: "IoT & Data Analytics Projects",
+      desc: "Sensor monitoring, real-time analytics, and applied data pipelines — the embedded/data side of the same degree.",
+      stack: "Python · Raspberry Pi",
+      url: "https://github.com/idiljot-singh/iot-data-projects"
+    }
+  ];
+
+  const grid = document.getElementById('proj-grid');
+  grid.innerHTML = projects.map(p => `
+    <div class="proj-card">
+      <div class="idx">// ${p.n}</div>
+      <h3>${p.title}</h3>
+      <p>${p.desc}</p>
+      <div class="link-row">
+        <a href="${p.url}" target="_blank" rel="noopener">view repo</a>
+        <span class="stack">${p.stack}</span>
+      </div>
+    </div>
+  `).join('');
+</script>
+
+</body>
+</html>
