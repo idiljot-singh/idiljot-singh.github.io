@@ -374,7 +374,8 @@
       n: "NEW", title: "Specula: CVE Prioritisation",
       desc: "Open-source CTI pipeline that narrows every CVE in the world to the few that matter to one organisation, with KEV, EPSS, MITRE ATT&CK and an explainable score. Futuristic funnel console, STIX 2.1 output.",
       stack: "Python · STIX 2.1 · ATT&CK",
-      url: "https://github.com/idiljot-singh/Specula"
+      url: "https://github.com/idiljot-singh/Specula",
+      live: "https://idiljot-singh.github.io/Specula/"
     },
     {
       n: "01", title: "Metasploitable2 Penetration Test",
@@ -439,7 +440,7 @@
       <h3>${p.title}</h3>
       <p>${p.desc}</p>
       <div class="link-row">
-        <a href="${p.url}" target="_blank" rel="noopener">view repo</a>
+        <span>${p.live ? `<a href="${p.live}" target="_blank" rel="noopener">live page</a> · ` : ""}<a href="${p.url}" target="_blank" rel="noopener">view repo</a></span>
         <span class="stack">${p.stack}</span>
       </div>
     </div>
